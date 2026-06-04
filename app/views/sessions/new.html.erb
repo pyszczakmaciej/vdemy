@@ -1,0 +1,92 @@
+<div class="min-h-screen grid grid-cols-2 bg-(--bg)">
+
+  <%# Left banner %>
+  <div class="bg-(--bg-sunken) border-r border-(--border) py-10 px-14 flex flex-col justify-between relative overflow-hidden">
+
+    <div class="relative z-10 font-bold text-lg cursor-pointer">
+      Vdemy
+    </div>
+
+    <div class="relative z-10 max-w-[460px] flex flex-col gap-6">
+      <div class="serif text-[44px] leading-[1.1] text-(--text)">
+        A quiet place to learn,<br />from people who&nbsp;ship.
+      </div>
+      <div class="text-[14.5px] text-(--text-muted) leading-relaxed max-w-[420px]">
+        Vdemy is a focused library of courses from working engineers, designers, and researchers.
+        No streaks, no autoplay, no infinite scroll. Just well-made lessons you can finish.
+      </div>
+    </div>
+
+    <div class="relative z-10 flex gap-6 text-(--text-subtle) text-xs">
+      <span class="mono">280+ courses</span>
+      <span class="mono">62k students</span>
+      <span class="mono">4.8 avg rating</span>
+    </div>
+  </div>
+
+  <%# Right form panel %>
+  <div class="py-10 px-14 flex items-center justify-center">
+    <div class="w-full max-w-[380px] fade-in">
+      <div class="flex flex-col gap-7">
+
+        <div class="flex flex-col gap-1.5">
+          <div class="h1">Welcome back.</div>
+          <div class="text-[14.5px] text-(--text-muted)">
+            Sign in to keep going. New here?
+            <%= link_to "Create an account", class: "text-(--text) font-medium underline" %>
+          </div>
+        </div>
+
+        <% if alert = flash[:alert] %>
+          <div class="p-3 bg-red-50 border border-red-200 rounded-(--radius) text-red-800 text-[13px]">
+            <%= alert %>
+          </div>
+        <% end %>
+
+        <% if notice = flash[:notice] %>
+          <div class="p-3 bg-green-50 border border-green-200 rounded-(--radius) text-green-800 text-[13px]">
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <%= form_with url: session_url, class: "flex flex-col gap-4" do |form| %>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[13px] font-medium text-(--text-muted)">Email</label>
+            <%= form.email_field :email_address,
+                                 required: true,
+                                 autofocus: true,
+                                 autocomplete: "username",
+                                 placeholder: "you@school.edu",
+                                 value: params[:email_address],
+                                 class: "w-full py-2.5 px-3.5 bg-(--bg-elev) border border-(--border) rounded-(--radius) text-sm outline-none text-(--text)" %>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[13px] font-medium text-(--text-muted)">Password</label>
+            <%= form.password_field :password,
+                                    required: true,
+                                    autocomplete: "current-password",
+                                    placeholder: "Your password",
+                                    maxlength: 72,
+                                    class: "w-full py-2.5 px-3.5 bg-(--bg-elev) border border-(--border) rounded-(--radius) text-sm outline-none text-(--text)" %>
+          </div>
+
+          <div class="flex justify-between items-center">
+            <label class="inline-flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" name="remember" id="remember"
+                     class="size-[15px] accent-(--accent)" checked>
+              <span class="text-[13px] text-(--text-muted)">Remember me</span>
+            </label>
+            <%= link_to "Forgot password?", new_password_path, class: "text-[13px] text-(--text-muted) no-underline" %>
+          </div>
+
+          <%= form.submit "Sign in",
+                          class: "w-full py-3 mt-2 bg-(--accent) text-white border-0 rounded-(--radius) text-sm font-medium cursor-pointer text-center" %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+</div>
