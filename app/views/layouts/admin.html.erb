@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full">
 <head>
   <title><%= content_for(:title) || "Vdemy" %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,21 +11,102 @@
 
   <%= yield :head %>
 
-  <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
   <link rel="icon" href="/icon.png" type="image/png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.png">
 
-  <%# Includes all stylesheet files in app/assets/stylesheets %>
   <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 </head>
+<body class="h-full">
 
-<body>
-<main class="container mx-auto">
-  <%= yield %>
-</main>
+<div class="flex min-h-screen">
+
+  <aside class="w-[232px] shrink-0 border-r border-(--border) bg-(--bg) flex flex-col pt-5 px-3.5 pb-3.5 gap-[18px] sticky top-0 h-screen">
+
+    <div class="px-1.5 flex flex-col gap-1.5">
+      <div class="inline-flex items-center gap-2 font-semibold text-lg tracking-[-0.025em]">
+        <span class="size-6 rounded-md bg-(--accent) text-white inline-flex items-center justify-center text-[11px] font-bold tracking-[-0.04em] shrink-0">V</span>
+        <span class="text-(--text)">V<span class="text-(--text-subtle) font-medium">demy</span></span>
+      </div>
+      <div class="pl-8">
+        <span class="mono text-[10px] tracking-widest text-(--accent-soft-fg) bg-(--accent-soft) py-0.5 px-1.5 rounded-sm uppercase font-semibold">Admin</span>
+      </div>
+    </div>
+
+    <nav class="flex flex-col gap-0.5">
+      <% [
+           { label: "Overview",  icon: "home",     path: "#",     active: controller_name == "dashboard" },
+           { label: "Courses",   icon: "library",  path: "#",  active: controller_name == "courses" },
+           { label: "Students",  icon: "users",    path:  "#", active: controller_name == "students" },
+           { label: "Revenue",   icon: "card",     path: "#",                 active: false },
+           { label: "Settings",  icon: "settings", path: "#",       active: false },
+         ].each do |item| %>
+        <%= link_to item[:path],
+                    class: "flex items-center gap-2.5 w-full py-[7px] px-2.5 rounded-(--radius-sm) text-[13.5px] tracking-[-0.005em] no-underline transition-colors duration-100 hover:bg-(--bg-muted) hover:text-(--text) #{item[:active] ? 'font-medium text-(--text) bg-(--bg-muted)' : 'font-normal text-(--text-muted)'}" do %>
+          <%= course_icon(item[:icon], size: 16) %>
+          <%= item[:label] %>
+        <% end %>
+      <% end %>
+    </nav>
+
+    <div class="flex flex-col gap-1.5 mt-1">
+      <div class="xs">Quick action</div>
+      <%= link_to class: "inline-flex items-center justify-center gap-2 px-4 h-[34px] text-[13px] font-medium bg-[#000000] text-white rounded-(--radius) no-underline w-full tracking-[-0.005em]" do %>
+        <%= course_icon("plus", size: 14) %>
+        New course
+      <% end %>
+    </div>
+
+    <div class="mt-auto flex flex-col gap-2.5">
+      <div class="h-px bg-(--border)"></div>
+      <div class="flex items-center gap-2.5 py-1 px-1.5">
+        <div class="size-7 rounded-full bg-(--accent) text-white inline-flex items-center justify-center text-[11px] font-semibold shrink-0">
+          <%= current_user&.email_address.to_s.first.upcase %>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="text-[13px] font-medium text-(--text) whitespace-nowrap overflow-hidden text-ellipsis"><%= current_user&.email_address %></div>
+          <div class="text-[11px] text-(--text-subtle)">Administrator</div>
+        </div>
+        <%= button_to session_path, method: :delete,
+                      class: "bg-transparent border-none cursor-pointer text-(--text-subtle) p-1.5 rounded-md inline-flex items-center shrink-0",
+                      title: "Sign out" do %>
+          <%= course_icon("logout", size: 15) %>
+        <% end %>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="flex-1 min-w-0 flex flex-col">
+    <div class="flex items-center gap-3.5 px-8 py-5 border-b border-(--border) bg-[color-mix(in_oklch,var(--bg)_86%,transparent)] backdrop-blur-sm sticky top-0 z-10">
+      <div class="min-w-0">
+        <div class="h2 m-0"><%= yield :page_title %></div>
+        <% if content_for?(:page_subtitle) %>
+          <div class="small mt-0.5"><%= yield :page_subtitle %></div>
+        <% end %>
+      </div>
+      <div class="flex-1"></div>
+      <%= yield :topbar_actions %>
+    </div>
+
+    <% if notice %>
+      <div class="mx-8 mt-4 px-3.5 py-2.5 bg-[oklch(94%_0.06_155)] text-[oklch(28%_0.12_155)] rounded-(--radius) text-[13.5px] border border-[oklch(85%_0.08_155)]">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div class="mx-8 mt-4 px-3.5 py-2.5 bg-[oklch(95%_0.06_25)] text-[oklch(40%_0.18_25)] rounded-(--radius) text-[13.5px] border border-[oklch(88%_0.08_25)]">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <div class="flex-1">
+      <%= yield %>
+    </div>
+
+  </main>
+</div>
+
 </body>
 </html>
