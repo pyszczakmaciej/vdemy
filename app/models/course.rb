@@ -1,6 +1,6 @@
 class Course < ApplicationRecord
   belongs_to :instructor, class_name: "User"
-  has_rich_text :description
+  has_many :chapters, -> {order(:position)}, dependent: :destroy
 
 
   enum :category, {
