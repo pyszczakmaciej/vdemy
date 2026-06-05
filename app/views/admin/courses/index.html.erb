@@ -1,0 +1,81 @@
+<div>
+  <% content_for :page_title, "Courses" %>
+  <% content_for :page_subtitle, "#{@courses.count} #{"course".pluralize(@courses.count)}" %>
+  <% content_for :topbar_actions do %>
+    <%= link_to admin_courses_new_path,
+                class: "inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors no-underline" do %>
+      <%= course_icon("plus", size: 16) %> New course
+    <% end %>
+  <% end %>
+
+  <div class="py-6 px-4 sm:px-6 lg:px-8 flex flex-col gap-5">
+    <div class="border border-gray-200 rounded-lg bg-white overflow-hidden shadow-sm">
+
+      <div class="grid grid-cols-[minmax(0,2fr)_90px_100px_90px_90px_32px] gap-4 px-5 py-3 border-b border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div>Course</div>
+        <div class="text-right">Level</div>
+        <div class="text-right">Price</div>
+        <div class="text-right">Status</div>
+        <div class="text-right">Created</div>
+        <div></div>
+      </div>
+
+      <% if @courses.empty? %>
+        <div class="py-12 px-8 text-center text-gray-500">
+          <div class="text-lg font-semibold text-gray-900 mb-2">No courses yet.</div>
+          <div class="text-sm mb-4">Create your first course to get started.</div>
+          <%= link_to admin_courses_new_path,
+                      class: "inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors no-underline" do %>
+            <%= course_icon("plus", size: 16) %> New course
+          <% end %>
+        </div>
+      <% else %>
+        <div class="divide-y divide-gray-200">
+          <% @courses.each do |course| %>
+            <%= link_to admin_edit_course_path(course), class: "group grid grid-cols-[minmax(0,2fr)_90px_100px_90px_90px_32px] gap-4 items-center px-5 py-4 no-underline text-inherit transition-colors duration-150 hover:bg-gray-50" do %>
+
+              <div class="min-w-0">
+                <div class="text-sm font-medium truncate text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <%= course.title.presence || "Untitled course" %>
+                </div>
+                <div class="text-xs truncate text-gray-500 mt-1">
+                  <%= Course::CATEGORY_LABELS[course.category] %> · <%= course.instructor&.email_address %>
+                </div>
+              </div>
+
+              <div class="text-sm text-right text-gray-500">
+                <%= Course::LEVEL_LABELS[course.level] %>
+              </div>
+
+              <div class="font-mono text-sm font-medium text-right <%= course.free? ? 'text-green-600' : 'text-gray-900' %>">
+                <%= course.display_price %>
+              </div>
+
+              <div class="flex justify-end">
+                <% if course.published? %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Published
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    Draft
+                  </span>
+                <% end %>
+              </div>
+
+              <div class="font-mono text-xs text-gray-500 text-right">
+                <%= course.created_at.strftime("%b %d") %>
+              </div>
+
+              <div class="text-gray-400 flex justify-end group-hover:text-blue-600 transition-colors">
+                <%= course_icon("chevron-right", size: 16) %>
+              </div>
+
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

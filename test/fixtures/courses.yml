@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  subtitle: MyString
+  price: 9.99
+  free: false
+  published: false
+  category: 1
+  level: 1
+  instructor: one
+
+two:
+  title: MyString
+  subtitle: MyString
+  price: 9.99
+  free: false
+  published: false
+  category: 1
+  level: 1
+  instructor: two

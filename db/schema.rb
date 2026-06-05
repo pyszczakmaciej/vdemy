@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_193325) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_120441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "admin_courses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.integer "category"
+    t.datetime "created_at", null: false
+    t.boolean "free"
+    t.bigint "instructor_id", null: false
+    t.integer "level"
+    t.decimal "price"
+    t.boolean "published"
+    t.string "subtitle"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["instructor_id"], name: "index_courses_on_instructor_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -32,5 +51,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_193325) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "courses", "users", column: "instructor_id"
   add_foreign_key "sessions", "users"
 end

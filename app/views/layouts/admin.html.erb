@@ -37,7 +37,7 @@
     <nav class="flex flex-col gap-0.5">
       <% [
            { label: "Overview",  icon: "home",     path: "#",     active: controller_name == "dashboard" },
-           { label: "Courses",   icon: "library",  path: "#",  active: controller_name == "courses" },
+           { label: "Courses",   icon: "library",  path: admin_courses_path,  active: controller_name == "courses" },
            { label: "Students",  icon: "users",    path:  "#", active: controller_name == "students" },
            { label: "Revenue",   icon: "card",     path: "#",                 active: false },
            { label: "Settings",  icon: "settings", path: "#",       active: false },
