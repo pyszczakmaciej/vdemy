@@ -1,43 +1,46 @@
-<div class="min-h-screen grid grid-cols-2 bg-(--bg)">
+<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white">
 
-  <div class="bg-(--bg-sunken) border-r border-(--border) py-10 px-14 flex flex-col justify-between relative overflow-hidden">
+  <div class="hidden lg:flex bg-slate-900 border-r border-slate-800 py-12 px-16 flex-col justify-between relative overflow-hidden text-slate-200">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-transparent opacity-50"></div>
 
-    <div class="relative z-10 font-bold text-lg cursor-pointer">
+    <div class="relative z-10 font-bold text-xl tracking-tight text-white flex items-center gap-2">
+      <span class="size-6 rounded-md bg-blue-600 text-white inline-flex items-center justify-center text-xs font-black tracking-tighter shrink-0">V</span>
       Vdemy
     </div>
 
-    <div class="relative z-10 max-w-[460px] flex flex-col gap-6">
-      <div class="serif text-[44px] leading-[1.1] text-(--text)">
-        A quiet place to learn,<br />from people who&nbsp;ship.
-      </div>
-      <div class="text-[14.5px] text-(--text-muted) leading-relaxed max-w-[420px]">
-        Vdemy is a focused library of courses from working engineers, designers, and researchers. No streaks, no autoplay, no infinite scroll. Just well-made lessons you can finish.
-      </div>
+    <div class="relative z-10 max-w-[440px] flex flex-col gap-6 my-auto">
+      <h1 class="font-serif text-4xl lg:text-5xl font-normal leading-[1.15] text-white tracking-tight">
+        A quiet place to learn,<br />from people who ship.
+      </h1>
+      <p class="text-sm lg:text-[15px] text-slate-400 leading-relaxed font-normal">
+        Vdemy is a focused library of courses from working engineers, designers, and researchers.
+        No streaks, no autoplay, no infinite scroll. Just well-made lessons you can finish.
+      </p>
     </div>
 
-    <div class="relative z-10 flex gap-6 text-(--text-subtle) text-xs">
-      <span class="mono">280+ courses</span>
-      <span class="mono">62k students</span>
-      <span class="mono">4.8 avg rating</span>
+    <div class="relative z-10 flex gap-8 text-slate-500 text-xs font-mono tracking-wider">
+      <span>280+ courses</span>
+      <span>62k students</span>
+      <span>4.8 avg rating</span>
     </div>
   </div>
 
-  <div class="py-10 px-14 flex items-center justify-center">
-    <div class="w-full max-w-[380px] fade-in">
-      <div class="flex flex-col gap-7">
+  <div class="py-12 px-6 sm:px-12 lg:px-16 flex items-center justify-center bg-slate-50/50">
+    <div class="w-full max-w-[360px]">
+      <div class="flex flex-col gap-8">
 
-        <div class="flex flex-col gap-1.5">
-          <div class="h1">Create an account</div>
-          <div class="text-[14.5px] text-(--text-muted)">
+        <div class="flex flex-col gap-2">
+          <h2 class="text-2xl font-bold tracking-tight text-slate-900">Create an account</h2>
+          <p class="text-sm text-slate-500">
             Get started with Vdemy today. Already have an account?
-            <%= link_to "Sign in", new_session_path, class: "text-(--text) font-medium underline" %>
-          </div>
+            <%= link_to "Sign in", new_session_path, class: "text-blue-600 font-semibold no-underline hover:underline transition-all" %>
+          </p>
         </div>
 
         <% if @user && @user.errors.any? %>
-          <div class="p-3 bg-red-50 border border-red-200 rounded-(--radius) text-red-800 text-[13px]">
-            <div class="font-semibold mb-1">Please fix the following:</div>
-            <ul class="m-0 pl-4">
+          <div class="p-4 bg-rose-50 border border-rose-100 rounded-xl text-rose-800 text-sm shadow-sm animate-fade-in">
+            <div class="font-bold mb-1.5 text-rose-900">Please fix the following:</div>
+            <ul class="list-disc pl-5 space-y-0.5 text-rose-700">
               <% @user.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
               <% end %>
@@ -45,29 +48,29 @@
           </div>
         <% end %>
 
-        <%= form_with model: @user, url: sign_up_path, class: "flex flex-col gap-4" do |form| %>
+        <%= form_with model: @user, url: sign_up_path, class: "flex flex-col gap-5" do |form| %>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-[13px] font-medium text-(--text-muted)">Email address</label>
+            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Email address</label>
             <%= form.email_field :email_address,
                                  required: true,
                                  autofocus: true,
                                  autocomplete: "email",
                                  placeholder: "you@example.com",
-                                 class: "w-full py-2.5 px-3.5 bg-(--bg-elev) border border-(--border) rounded-(--radius) text-sm outline-none text-(--text)" %>
+                                 class: "w-full py-2.5 px-3.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 outline-none shadow-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-50 animate-none" %>
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-[13px] font-medium text-(--text-muted)">Password</label>
+            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Password</label>
             <%= form.password_field :password,
                                     required: true,
                                     autocomplete: "new-password",
-                                    placeholder: "••••••••",
-                                    class: "w-full py-2.5 px-3.5 bg-(--bg-elev) border border-(--border) rounded-(--radius) text-sm outline-none text-(--text)" %>
+                                    placeholder: "Create a strong password",
+                                    class: "w-full py-2.5 px-3.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 outline-none shadow-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-50 animate-none" %>
           </div>
 
           <%= form.submit "Create account",
-                          class: "w-full py-3 mt-2 bg-(--accent) text-white border-0 rounded-(--radius) text-sm font-medium cursor-pointer text-center" %>
+                          class: "w-full py-2.5 mt-2 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-lg text-sm font-semibold shadow-sm transition-colors cursor-pointer text-center" %>
         <% end %>
 
       </div>
