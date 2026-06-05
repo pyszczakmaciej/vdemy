@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :courses
     root "dashboard#index"
   end
   resource :session

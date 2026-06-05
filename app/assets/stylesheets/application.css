@@ -10,30 +10,29 @@
  */
 
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap");
-
-:root {
-    --bg: oklch(99.5% 0.003 240);
-    --bg-elev: #ffffff;
-    --bg-sunken: oklch(97.8% 0.005 240);
-    --bg-muted: oklch(96% 0.006 240);
-    --border: oklch(92% 0.006 240);
-    --border-strong: oklch(86% 0.008 240);
-    --text: oklch(20% 0.02 250);
-    --text-muted: oklch(46% 0.015 250);
-    --text-subtle: oklch(62% 0.012 250);
-    --accent: oklch(38% 0.14 258);
-    --accent-hover: oklch(32% 0.16 258);
-    --accent-fg: #ffffff;
-    --success: oklch(58% 0.13 155);
-    --danger: oklch(58% 0.18 25);
-    --radius-sm: 6px;
-    --radius: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 20px;
-    --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04);
-    --shadow-md: 0 4px 16px -4px rgb(15 23 42 / 0.08), 0 1px 2px rgb(15 23 42 / 0.04);
-    --shadow-lg: 0 24px 48px -16px rgb(15 23 42 / 0.18), 0 2px 6px rgb(15 23 42 / 0.04);
-    --accent-soft: oklch(96% 0.025 258);
-    --accent-soft-fg: oklch(38% 0.14 258);
-    --ring: oklch(70% 0.13 258 / 0.35);
-}
+/*:root {*/
+/*    --bg: oklch(99.5% 0.003 240);*/
+/*    --bg-elev: #ffffff;*/
+/*    --bg-sunken: oklch(97.8% 0.005 240);*/
+/*    --bg-muted: oklch(96% 0.006 240);*/
+/*    --border: oklch(92% 0.006 240);*/
+/*    --border-strong: oklch(86% 0.008 240);*/
+/*    --text: oklch(20% 0.02 250);*/
+/*    --text-muted: oklch(46% 0.015 250);*/
+/*    --text-subtle: oklch(62% 0.012 250);*/
+/*    --accent: oklch(38% 0.14 258);*/
+/*    --accent-hover: oklch(32% 0.16 258);*/
+/*    --accent-fg: #ffffff;*/
+/*    --success: oklch(58% 0.13 155);*/
+/*    --danger: oklch(58% 0.18 25);*/
+/*    --radius-sm: 6px;*/
+/*    --radius: 10px;*/
+/*    --radius-lg: 14px;*/
+/*    --radius-xl: 20px;*/
+/*    --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04);*/
+/*    --shadow-md: 0 4px 16px -4px rgb(15 23 42 / 0.08), 0 1px 2px rgb(15 23 42 / 0.04);*/
+/*    --shadow-lg: 0 24px 48px -16px rgb(15 23 42 / 0.18), 0 2px 6px rgb(15 23 42 / 0.04);*/
+/*    --accent-soft: oklch(96% 0.025 258);*/
+/*    --accent-soft-fg: oklch(38% 0.14 258);*/
+/*    --ring: oklch(70% 0.13 258 / 0.35);*/
+/*}*/
