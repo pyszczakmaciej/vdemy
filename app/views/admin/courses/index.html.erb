@@ -2,7 +2,7 @@
   <% content_for :page_title, "Courses" %>
   <% content_for :page_subtitle, "#{@courses.count} #{"course".pluralize(@courses.count)}" %>
   <% content_for :topbar_actions do %>
-    <%= link_to admin_courses_new_path,
+    <%= link_to new_admin_course_path,
                 class: "inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors no-underline" do %>
       <%= course_icon("plus", size: 16) %> New course
     <% end %>
@@ -24,7 +24,7 @@
         <div class="py-12 px-8 text-center text-gray-500">
           <div class="text-lg font-semibold text-gray-900 mb-2">No courses yet.</div>
           <div class="text-sm mb-4">Create your first course to get started.</div>
-          <%= link_to admin_courses_new_path,
+          <%= link_to edit_admin_course_path,
                       class: "inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors no-underline" do %>
             <%= course_icon("plus", size: 16) %> New course
           <% end %>
@@ -32,7 +32,7 @@
       <% else %>
         <div class="divide-y divide-gray-200">
           <% @courses.each do |course| %>
-            <%= link_to admin_edit_course_path(course), class: "group grid grid-cols-[minmax(0,2fr)_90px_100px_90px_90px_32px] gap-4 items-center px-5 py-4 no-underline text-inherit transition-colors duration-150 hover:bg-gray-50" do %>
+            <%= link_to edit_admin_course_path(course), class: "group grid grid-cols-[minmax(0,2fr)_90px_100px_90px_90px_32px] gap-4 items-center px-5 py-4 no-underline text-inherit transition-colors duration-150 hover:bg-gray-50" do %>
 
               <div class="min-w-0">
                 <div class="text-sm font-medium truncate text-gray-900 group-hover:text-blue-600 transition-colors">

@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
   namespace :admin do
-    get "courses" => "courses#index"
-    get "courses/:id/edit" => "courses#edit", as: "edit_course"
-    get "courses/new" => "courses#new"
-    get "courses/create"
-    get "courses/update"
-    get "courses/destroy"
+    resources :courses
     root "dashboard#index"
   end
   resource :session
