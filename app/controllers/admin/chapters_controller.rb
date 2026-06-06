@@ -38,11 +38,11 @@ class Admin::ChaptersController < ApplicationController
   private
 
   def set_course
-    @course = Course.find(params[:course_id])
+    @course = Course.friendly.find(params[:course_id])
   end
 
   def set_chapter
-    @chapter = @course.chapters.find(params[:id])
+    @chapter = @course.chapters.friendly.find(params[:id])
   end
 
   def chapter_params

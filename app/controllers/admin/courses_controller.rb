@@ -6,11 +6,9 @@ class Admin::CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.find(params[:id])
   end
 
   def edit
-    @course = Course.find(params[:id])
   end
 
   def new
@@ -47,7 +45,7 @@ class Admin::CoursesController < ApplicationController
   private
 
   def set_course
-    @course = Course.includes(:chapters).find(params[:id])
+    @course = Course.includes(:chapters).friendly.find(params[:id])
   end
 
   def course_params
