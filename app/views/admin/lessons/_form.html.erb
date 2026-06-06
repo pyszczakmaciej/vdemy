@@ -1,0 +1,82 @@
+<%= form_with(model: [:admin, course, chapter, lesson], class: "space-y-6 max-w-[600px] mx-auto w-full") do |f| %>
+
+  <% if lesson.errors.any? %>
+    <div class="p-4 bg-rose-50 border border-rose-100 rounded-xl text-rose-800 text-sm shadow-sm">
+      <h2 class="font-bold text-rose-900 mb-1.5">
+        <%= pluralize(lesson.errors.count, "error") %> prevented this lesson from being saved:
+      </h2>
+      <ul class="list-disc list-inside text-xs space-y-0.5 text-rose-700">
+        <% lesson.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="bg-white p-6 border border-slate-200 rounded-xl shadow-sm space-y-5">
+
+    <div>
+      <%= f.label :title, "Lesson Title", class: "block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" %>
+      <%= f.text_field :title,
+                       class: "block w-full rounded-lg border border-slate-200 px-3.5 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none text-sm transition-all",
+                       placeholder: "e.g., Introduction to Active Record",
+                       required: true %>
+    </div>
+
+    <div>
+      <%= f.label :duration, "Duration (MM:SS)", class: "block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" %>
+      <%= f.text_field :duration,
+                       class: "block w-full rounded-lg border border-slate-200 px-3.5 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none text-sm transition-all match-mono",
+                       placeholder: "00:00" %>
+      <p class="text-slate-400 text-[11px] mt-1">Specify duration using the format minutes:seconds (e.g., 14:20).</p>
+    </div>
+
+    <div class="pt-2">
+      <%= f.label :file, "Lesson Media (MP4, JPG or PNG)", class: "block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" %>
+
+      <div class="mt-1 flex flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 px-6 py-6 bg-slate-50/50">
+        <div class="space-y-1 text-center"
+             data-default-status="<%= lesson.file.attached? ? "Current file: #{lesson.file.filename}" : "No file chosen" %>"
+             data-default-attached="<%= lesson.file.attached? ? 'true' : 'false' %>"
+             data-default-action="<%= lesson.file.attached? ? "Replace file" : "Upload a file" %>">
+
+          <div class="status-text text-xs font-medium text-slate-500 mb-2">
+            <% if lesson.file.attached? %>
+              <span class="text-emerald-600">Current file: <%= lesson.file.filename %></span>
+            <% else %>
+              No file chosen
+            <% end %>
+          </div>
+
+          <div class="flex text-sm text-slate-600 justify-center">
+            <label class="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none hover:text-blue-500 px-2 py-1 border border-slate-200 shadow-sm">
+              <span class="action-text"><%= lesson.file.attached? ? "Replace file" : "Upload a file" %></span>
+              <%= f.file_field :file,
+                               accept: "video/mp4,image/jpeg,image/png",
+                               class: "sr-only",
+                               onchange: "
+                                 var container = this.closest('.space-y-1');
+                                 var name = this.files[0]?.name || '';
+                                 if (name) {
+                                   container.querySelector('.status-text').innerHTML = '<span class=\"text-blue-600 font-semibold\">Selected: ' + name + '</span>';
+                                   container.querySelector('.action-text').textContent = 'Change file';
+                                 } else {
+                                   var isAttached = container.dataset.defaultAttached === 'true';
+                                   container.querySelector('.status-text').innerHTML = isAttached ? '<span class=\"text-emerald-600\">' + container.dataset.defaultStatus + '</span>' : container.dataset.defaultStatus;
+                                   container.querySelector('.action-text').textContent = container.dataset.defaultAction;
+                                 }
+                               " %>
+            </label>
+          </div>
+          <p class="text-xs text-slate-500">MP4 video up to 500MB or high-res image</p>
+        </div>
+      </div>
+    </div>
+                  </div>
+
+                  <div class="flex justify-end gap-3 pt-4">
+                    <%= link_to "Cancel", edit_admin_course_path(course), class: "px-4 py-2 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 hover:text-slate-900 transition-colors no-underline" %>
+                    <%= f.submit lesson.new_record? ? "Create lesson" : "Save changes", class: "px-4 py-2 text-sm font-semibold text-white bg-blue-600 border-0 rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-50 cursor-pointer transition-colors" %>
+                  </div>
+
+                <% end %>

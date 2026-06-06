@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_05_204755) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_215314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -80,6 +80,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_204755) do
     t.index ["instructor_id"], name: "index_courses_on_instructor_id"
   end
 
+  create_table "lessons", force: :cascade do |t|
+    t.bigint "chapter_id", null: false
+    t.datetime "created_at", null: false
+    t.string "duration"
+    t.integer "position"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_lessons_on_chapter_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -102,5 +112,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_204755) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chapters", "courses"
   add_foreign_key "courses", "users", column: "instructor_id"
+  add_foreign_key "lessons", "chapters"
   add_foreign_key "sessions", "users"
 end

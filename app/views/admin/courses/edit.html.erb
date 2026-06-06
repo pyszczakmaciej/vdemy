@@ -15,29 +15,92 @@
     </div>
 
     <% if @course.chapters.any? %>
-      <div class="flex flex-col gap-2.5">
+      <div class="flex flex-col gap-4">
         <% @course.chapters.each_with_index do |chapter, ci| %>
-          <div class="border border-slate-200 rounded-lg bg-white overflow-hidden shadow-sm flex items-center justify-between px-4 py-3 hover:bg-slate-50/50 transition-colors">
 
-            <div class="flex-1 flex items-center gap-3 min-w-0">
-              <span class="mono text-[11px] text-slate-400 w-6 font-bold">CH <%= "%02d" % (ci + 1) %></span>
+          <div class="border border-slate-200 rounded-lg bg-white overflow-hidden shadow-sm flex flex-col">
 
-              <%= form_with url: admin_course_chapter_path(@course, chapter), method: :patch,
-                            scope: :chapter,
-                            class: "flex-1 flex items-center" do |cf| %>
-                <%= cf.text_field :title, value: chapter.title,
-                                  class: "flex-1 border-none bg-transparent outline-none text-[14px] font-semibold text-slate-900 p-0 focus:bg-white px-2 py-1 rounded border focus:border-slate-300 transition-all",
-                                  placeholder: "Chapter title",
-                                  onblur: "this.form.requestSubmit()" %>
-              <% end %>
+            <div class="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-200/60">
+
+              <div class="flex-1 flex items-center gap-3 min-w-0">
+                <span class="mono text-[11px] text-slate-400 w-6 font-bold">CH <%= "%02d" % (ci + 1) %></span>
+
+                <%= form_with url: admin_course_chapter_path(@course, chapter), method: :patch,
+                              scope: :chapter,
+                              class: "flex-1 flex items-center" do |cf| %>
+                  <%= cf.text_field :title, value: chapter.title,
+                                    class: "flex-1 border-none bg-transparent outline-none text-[14px] font-semibold text-slate-900 p-0 focus:bg-white px-2 py-1 rounded border focus:border-slate-300 transition-all",
+                                    placeholder: "Chapter title",
+                                    onblur: "this.form.requestSubmit()" %>
+                <% end %>
+              </div>
+
+              <div class="flex items-center gap-2 shrink-0 pl-4">
+                <span class="text-xs text-slate-400 font-medium mr-2">
+                  <%= pluralize(chapter.lessons.count, "lesson") %>
+                </span>
+
+                <%= link_to new_admin_course_chapter_lesson_path(@course, chapter),
+                            class: "text-slate-500 hover:text-blue-600 px-2 py-1 text-xs font-semibold no-underline border border-slate-200 rounded bg-white shadow-sm transition-colors cursor-pointer",
+                            title: "Add lesson to this chapter" do %>
+                  + Add lesson
+                <% end %>
+
+                <%= link_to admin_course_chapter_path(@course, chapter),
+                            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete chapter \"#{chapter.title}\" and all its lessons?" },
+                            class: "text-slate-400 hover:text-rose-600 p-1 inline-flex items-center rounded transition-colors cursor-pointer",
+                            title: "Delete chapter" do %>
+                  <%= course_icon("trash", size: 14) rescue "Delete" %>
+                <% end %>
+              </div>
+
             </div>
 
-            <div class="flex items-center shrink-0 pl-4">
-              <%= link_to admin_course_chapter_path(@course, chapter),
-                          data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete chapter \"#{chapter.title}\"?" },
-                          class: "text-slate-400 hover:text-rose-600 p-1 inline-flex items-center rounded-md transition-colors cursor-pointer",
-                          title: "Delete chapter" do %>
-                <%= "Delete" %>
+            <div class="divide-y divide-slate-100 bg-white">
+              <% if chapter.lessons.any? %>
+                <% chapter.lessons.each_with_index do |lesson, li| %>
+                  <div class="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50/50 transition-colors text-sm">
+
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="mono text-[11px] text-slate-400 w-6"><%= "%02d" % (li + 1) %></span>
+                      <div class="truncate font-medium text-slate-700">
+                        <%= lesson.title %>
+                      </div>
+
+                      <% if lesson.file.attached? %>
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+                          <%= lesson.file.video? ? "Video" : "Image" %>
+                        </span>
+                      <% end %>
+                    </div>
+
+                    <div class="flex items-center gap-4 shrink-0 pl-4">
+                      <% if lesson.duration.present? %>
+                        <span class="mono text-xs text-slate-400"><%= lesson.duration %></span>
+                      <% end %>
+
+                      <div class="flex items-center gap-1.5">
+                        <%= link_to edit_admin_course_chapter_lesson_path(@course, chapter, lesson),
+                                    class: "text-slate-400 hover:text-slate-700 p-1 inline-flex items-center transition-colors no-underline",
+                                    title: "Edit lesson" do %>
+                          <span class="text-xs font-semibold">Edit</span>
+                        <% end %>
+
+                        <%= link_to admin_course_chapter_lesson_path(@course, chapter, lesson),
+                                    data: { turbo_method: :delete, turbo_confirm: "Delete lesson \"#{lesson.title}\"?" },
+                                    class: "text-slate-400 hover:text-rose-600 p-1 inline-flex items-center transition-colors cursor-pointer",
+                                    title: "Delete lesson" do %>
+                          <%= course_icon("trash", size: 13) rescue "×" %>
+                        <% end %>
+                      </div>
+                    </div>
+
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="px-4 py-3 text-xs text-slate-400 italic bg-slate-50/30">
+                  No lessons in this chapter yet. Click "+ Add lesson" to create one.
+                </div>
               <% end %>
             </div>
 
@@ -62,5 +125,4 @@
                    class: "px-4 h-9 bg-slate-900 hover:bg-slate-800 text-white border-0 rounded-lg text-[13px] font-semibold cursor-pointer whitespace-nowrap shadow-sm transition-colors" %>
     <% end %>
 
-  </section>
-</div>
+  </section></div>

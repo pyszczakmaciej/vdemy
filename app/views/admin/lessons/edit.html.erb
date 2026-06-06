@@ -1,0 +1,6 @@
+<% content_for :page_title, "Add New Lesson" %>
+<% content_for :page_subtitle, "Adding to Chapter: #{@chapter.title}" %>
+
+<div class="py-7 px-8 pb-[60px]">
+  <%= render "form", course: @course, chapter: @chapter, lesson: @lesson %>
+</div>
