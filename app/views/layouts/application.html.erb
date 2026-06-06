@@ -37,7 +37,7 @@
     <nav class="flex flex-col gap-1">
       <% [
            { label: "Home",   icon: "home",  path: root_path, active: controller_name == "home" },
-           { label: "Discover",   icon: "compass",  path: "#", active: controller_name == "discover" },
+           { label: "Discover",   icon: "compass",  path: discover_index_path, active: controller_name == "discover" },
            { label: "My Courses", icon: "library",  path: "#", active: controller_name == "courses" || controller_name == "dashboards" },
            { label: "Settings",   icon: "settings", path: "#", active: controller_name == "settings" },
          ].each do |item| %>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "discover/index"
+  get "courses/index"
   namespace :admin do
     get "lessons/edit"
     get "lessons/new"
