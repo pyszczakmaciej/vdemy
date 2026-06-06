@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   namespace :admin do
-    resources :courses
+    get "lessons/edit"
+    get "lessons/new"
+    get "lessons/show"
+    resources :courses do
+      resources :chapters, only: [:create, :update, :destroy ] do
+        resources :lessons, except: [:index]
+      end
+    end
     root "dashboard#index"
   end
   resource :session
