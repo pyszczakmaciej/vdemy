@@ -1,0 +1,65 @@
+<% content_for :page_title, "Discover" %>
+<% content_for :page_subtitle, "Browse our catalog and find the perfect course to level up your skills." %>
+
+<div class="p-8">
+  <div class="flex flex-wrap items-center gap-2">
+    <% all_active = params[:category].blank? %>
+    <%= link_to discover_index_path,
+                class: "inline-flex items-center justify-center px-4 h-9 rounded-full text-xs font-semibold border no-underline transition-all duration-150 #{all_active ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-900'}" do %>
+      All Categories
+    <% end %>
+
+    <% @categories.each do |category| %>
+      <% is_active = params[:category] == category %>
+      <%= link_to discover_index_path(category: category),
+                  class: "inline-flex items-center justify-center px-4 h-9 rounded-full text-xs font-semibold border no-underline transition-all duration-150 #{is_active ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-900'}" do %>
+        <%= Course::CATEGORY_LABELS[category] %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if @courses.empty? %>
+    <div class="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-xl mx-auto shadow-sm">
+      <div class="size-12 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center mx-auto mb-4 border border-slate-100">
+        <%= course_icon("compass", size: 24) %>
+      </div>
+      <h3 class="text-sm font-bold text-slate-900 tracking-tight">No courses available</h3>
+      <p class="text-xs text-slate-500 mt-1">Check back later for new content and exciting learning paths.</p>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
+      <% @courses.each do |course| %>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col hover:shadow-md hover:border-slate-300 transition-all duration-200 relative group">
+
+          <%= link_to "", discover_path(course), class: "absolute inset-0 z-0" %>
+
+          <div class="h-44 bg-slate-50 border-b border-slate-100 flex items-center justify-center text-slate-300 shrink-0 select-none">
+            <%= course_icon("library", size: 40) %>
+          </div>
+
+          <div class="p-5 flex flex-col flex-1 gap-4">
+            <div class="min-w-0 flex-1">
+              <h3 class="font-bold text-slate-900 tracking-tight text-base group-hover:text-blue-600 transition-colors truncate">
+                <%= course.title.presence || "Untitled Course" %>
+              </h3>
+              <p class="text-xs text-slate-400 truncate mt-1">
+                by <%= course.instructor&.email_address || "Platform Instructor" %>
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 pt-2 border-t border-slate-100 relative z-10 mt-auto">
+              <div class="font-mono font-bold text-base text-slate-900">
+                <%= course.display_price %>
+              </div>
+
+              <%= button_to "Enroll", "#",
+                            method: :post,
+                            class: "inline-flex items-center justify-center px-4 h-9 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg no-underline tracking-tight transition-colors shadow-sm cursor-pointer relative z-20" %>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

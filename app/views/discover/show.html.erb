@@ -1,0 +1,97 @@
+<% content_for :page_title, @course.title.presence || "Course Details" %>
+<% content_for :page_subtitle, "Explore the curriculum and details of this course." %>
+
+<% content_for :topbar_actions do %>
+  <div class="flex items-center gap-3">
+    <%= link_to discover_index_path, class: "inline-flex items-center justify-center gap-2 px-4 h-9 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors no-underline shadow-sm" do %>
+      <%= course_icon("arrow-left", size: 14) if defined?(course_icon) %>
+      Back
+    <% end %>
+    <%= button_to "Enroll", "#", method: :post, class: "inline-flex items-center justify-center px-4 h-9 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm cursor-pointer" %>
+  </div>
+<% end %>
+
+<div class="p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+  <div class="lg:col-span-2 flex flex-col gap-6">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h2 class="text-sm font-bold text-slate-900 tracking-tight">Course Curriculum</h2>
+      </div>
+
+      <div class="p-6 flex flex-col gap-6">
+        <% if @course.chapters.empty? %>
+          <div class="text-center py-6 text-sm text-slate-500">No chapters published yet for this course.</div>
+        <% else %>
+          <% @course.chapters.each_with_index do |chapter, index| %>
+            <div class="flex flex-col gap-3">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400">Chapter <%= index + 1 %>:</span>
+                <%= chapter.title %>
+              </h3>
+
+              <div class="border border-slate-200 rounded-xl divide-y divide-slate-100 overflow-hidden bg-slate-50/20">
+                <% if chapter.lessons.empty? %>
+                  <div class="px-4 py-3 text-xs text-slate-400">No lessons available in this chapter.</div>
+                <% else %>
+                  <% chapter.lessons.each do |lesson| %>
+                    <div class="px-4 py-3.5 flex items-center justify-between gap-4 text-sm bg-white hover:bg-slate-50/50 transition-colors">
+                      <div class="flex items-center gap-3 min-w-0">
+                        <div class="text-slate-400 shrink-0">
+                          <%= course_icon("play", size: 16) if defined?(course_icon) %>
+                        </div>
+                        <span class="font-medium text-slate-700 truncate"><%= lesson.title %></span>
+                      </div>
+
+                      <div class="flex items-center gap-3 shrink-0">
+                        <span class="text-xs font-mono text-slate-400">
+                          <%= lesson.duration || "00:00" %>
+                        </span>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-6">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col gap-5 sticky top-24">
+      <div class="flex flex-col gap-1">
+        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Price</span>
+        <div class="text-3xl font-mono font-bold text-slate-900"><%= @course.display_price %></div>
+      </div>
+
+      <div class="h-px bg-slate-100"></div>
+
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3 text-sm text-slate-600">
+          <div class="text-slate-400 shrink-0">
+            <%= course_icon("users", size: 18) if defined?(course_icon) %>
+          </div>
+          <div>
+            Instructor: <span class="font-semibold text-slate-900 block mt-0.5"><%= @course.instructor&.email_address || "Platform Instructor" %></span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 text-sm text-slate-600">
+          <div class="text-slate-400 shrink-0">
+            <%= course_icon("library", size: 18) if defined?(course_icon) %>
+          </div>
+          <div>
+            Total Chapters: <span class="font-semibold text-slate-900 block mt-0.5"><%= @course.chapters.count %></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <%= button_to "Enroll in Course", "#", method: :post, class: "w-full inline-flex items-center justify-center h-10 px-4 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm cursor-pointer" %>
+      </div>
+    </div>
+  </div>
+
+</div>

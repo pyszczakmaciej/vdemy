@@ -22,6 +22,8 @@ class Course < ApplicationRecord
     free ? "Free" : "$#{price.to_i}"
   end
 
+  scope :published, -> { where(published: true) }
+
   CATEGORY_LABELS = {
     "programming" => "Programming",
     "design" => "Design",
