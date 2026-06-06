@@ -1,6 +1,11 @@
 class DiscoverController < ApplicationController
   def index
-    @courses = Course.all.where(published: true)
+    @courses = Course.published
+    @categories = Course::CATEGORY_LABELS.keys
+
+    if params[:category].present? && @categories.include?(params[:category])
+      @courses = @courses.where(category: params[:category])
+    end
   end
 
   def show
