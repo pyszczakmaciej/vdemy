@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :courses, foreign_key: :instructor_id, dependent: :nullify
+  has_many :enrollments, dependent: :destroy
+  has_many :enrolled_courses, through: :enrollments, source: :course
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
