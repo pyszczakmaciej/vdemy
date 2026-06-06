@@ -9,6 +9,7 @@ module ApplicationHelper
     }
 
     case name
+    when "compass"       then svg.("<circle cx='12' cy='12' r='9'/><path d='m15.5 8.5-2 5-5 2 2-5 5-2z'/>")
     when "logout" then svg.("<path d='M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3'/><path d='M10 17l-5-5 5-5'/><path d='M5 12h11'/>")
     when "home"          then svg.("<path d='M3 11.5 12 4l9 7.5'/><path d='M5 10v10h14V10'/>")
     when "users"         then svg.("<circle cx='9' cy='9' r='3.5'/><path d='M3 19c0-3 2.7-5 6-5s6 2 6 5'/><circle cx='17' cy='9' r='2.5'/><path d='M21 18c0-2-1.4-3.5-4-4'/>")
