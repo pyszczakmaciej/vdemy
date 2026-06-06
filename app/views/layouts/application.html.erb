@@ -1,31 +1,104 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= content_for(:title) || "Vdemy" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Vdemy">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html class="h-full bg-slate-50">
+<head>
+  <title><%= content_for(:title) || "Vdemy" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Vdemy">
+  <meta name="mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="h-full text-slate-900 antialiased">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+<div class="flex min-h-screen">
 
-  <body>
-    <main class="container mx-auto">
+  <aside class="w-60 shrink-0 border-r border-slate-200 bg-white flex flex-col pt-6 px-4 pb-4 gap-6 sticky top-0 h-screen">
+
+    <div class="px-1 flex flex-col gap-1">
+      <div class="inline-flex items-center gap-2 font-bold text-xl tracking-tight">
+        <span class="size-6 rounded-md bg-blue-600 text-white inline-flex items-center justify-center text-xs font-black tracking-tighter shrink-0">V</span>
+        <span class="text-slate-900">V<span class="text-slate-400 font-medium">demy</span></span>
+      </div>
+      <div class="pl-8">
+        <span class="font-mono text-[10px] tracking-widest text-slate-600 bg-slate-100 py-0.5 px-2 rounded font-bold uppercase">Student</span>
+      </div>
+    </div>
+
+    <nav class="flex flex-col gap-1">
+      <% [
+           { label: "Home",   icon: "home",  path: root_path, active: controller_name == "home" },
+           { label: "Discover",   icon: "compass",  path: "#", active: controller_name == "discover" },
+           { label: "My Courses", icon: "library",  path: "#", active: controller_name == "courses" || controller_name == "dashboards" },
+           { label: "Settings",   icon: "settings", path: "#", active: controller_name == "settings" },
+         ].each do |item| %>
+        <%= link_to item[:path],
+                    class: "flex items-center gap-3 w-full py-2 px-3 rounded-lg text-sm no-underline transition-all duration-150 #{item[:active] ? 'font-semibold text-blue-600 bg-blue-50' : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-900'}" do %>
+          <%= course_icon(item[:icon], size: 16) %>
+          <%= item[:label] %>
+        <% end %>
+      <% end %>
+    </nav>
+
+    <div class="mt-auto flex flex-col gap-4">
+      <div class="h-px bg-slate-200"></div>
+      <div class="flex items-center gap-3 py-1 px-1">
+        <div class="size-8 rounded-full bg-blue-600 text-white inline-flex items-center justify-center text-xs font-bold shrink-0 shadow-sm">
+          <%= current_user&.email_address.to_s.first.upcase %>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="text-sm font-semibold text-slate-900 truncate"><%= current_user&.email_address %></div>
+          <div class="text-xs text-slate-500">Student</div>
+        </div>
+        <%= button_to session_path, method: :delete,
+                      class: "bg-transparent border-none cursor-pointer text-slate-400 hover:text-slate-600 p-1.5 rounded-lg inline-flex items-center shrink-0 transition-colors",
+                      title: "Sign out" do %>
+          <%= course_icon("logout", size: 16) %>
+        <% end %>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="flex-1 min-w-0 flex flex-col bg-slate-50">
+
+    <div class="flex items-center gap-4 px-8 py-5 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+      <div class="min-w-0">
+        <h1 class="text-xl font-bold tracking-tight text-slate-900 m-0"><%= yield :page_title %></h1>
+        <% if content_for?(:page_subtitle) %>
+          <div class="text-xs text-slate-500 mt-0.5"><%= yield :page_subtitle %></div>
+        <% end %>
+      </div>
+      <div class="flex-1"></div>
+      <%= yield :topbar_actions %>
+    </div>
+
+    <% if notice %>
+      <div class="mx-8 mt-4 px-4 py-3 bg-emerald-50 text-emerald-800 rounded-lg text-sm border border-emerald-200 shadow-sm flex items-center gap-2 animate-fade-in">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div class="mx-8 mt-4 px-4 py-3 bg-rose-50 text-rose-800 rounded-lg text-sm border border-rose-200 shadow-sm flex items-center gap-2 animate-fade-in">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <div class="flex-1">
       <%= yield %>
-    </main>
-  </body>
+    </div>
+
+  </main>
+</div>
+
+</body>
 </html>
