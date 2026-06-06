@@ -1,6 +1,8 @@
 class Course < ApplicationRecord
   belongs_to :instructor, class_name: "User"
   has_many :chapters, -> {order(:position)}, dependent: :destroy
+  has_many :lessons, through: :chapters
+  has_many :enrollments, dependent: :destroy
 
 
   enum :category, {
