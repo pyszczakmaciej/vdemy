@@ -1,4 +1,6 @@
 class Course < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
   belongs_to :instructor, class_name: "User"
   has_many :chapters, -> {order(:position)}, dependent: :destroy
   has_many :lessons, through: :chapters

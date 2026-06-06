@@ -1,4 +1,6 @@
 class Lesson < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
   belongs_to :chapter
 
   has_one_attached :file
