@@ -13,6 +13,6 @@ class DiscoverController < ApplicationController
   end
 
   def show
-    @course = Course.find(params[:id])
+    @course = Course.friendly.find(params[:id])
   end
 end

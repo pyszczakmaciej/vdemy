@@ -46,14 +46,14 @@ class Admin::LessonsController < ApplicationController
   end
 
   def set_course
-    @course = Course.find(params[:course_id])
+    @course = Course.friendly.find(params[:course_id])
   end
 
   def set_chapter
-    @chapter = Chapter.find(params[:chapter_id])
+    @chapter = @course.chapters.friendly.find(params[:chapter_id])
   end
 
   def set_lesson
-    @lesson = Lesson.find(params[:id])
+    @lesson = @chapter.lessons.friendly.find(params[:id])
   end
 end
