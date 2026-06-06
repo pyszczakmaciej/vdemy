@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_06_174440) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_06_213416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,9 +61,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_174440) do
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.integer "position"
+    t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_chapters_on_course_id"
+    t.index ["slug"], name: "index_chapters_on_slug", unique: true
   end
 
   create_table "courses", force: :cascade do |t|
@@ -74,10 +76,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_174440) do
     t.integer "level"
     t.decimal "price"
     t.boolean "published"
+    t.string "slug"
     t.string "subtitle"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["instructor_id"], name: "index_courses_on_instructor_id"
+    t.index ["slug"], name: "index_courses_on_slug", unique: true
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -89,14 +93,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_174440) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.datetime "created_at"
+    t.string "scope"
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.bigint "chapter_id", null: false
     t.datetime "created_at", null: false
     t.string "duration"
     t.integer "position"
+    t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["chapter_id"], name: "index_lessons_on_chapter_id"
+    t.index ["slug"], name: "index_lessons_on_slug", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|

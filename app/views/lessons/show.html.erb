@@ -1,0 +1,105 @@
+<% content_for :page_title, @course.title %>
+<% content_for :page_subtitle, "Oglądasz: #{@lesson.title}" %>
+
+<% content_for :topbar_actions do %>
+  <%= link_to discover_path(@course), class: "inline-flex items-center justify-center gap-2 px-4 h-9 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors no-underline shadow-sm" do %>
+    <% if defined?(course_icon) %>
+      <%= course_icon("arrow-left", size: 14) %>
+    <% else %>
+      &larr;
+    <% end %>
+    Powrót do opisu kursu
+  <% end %>
+<% end %>
+
+<div class="p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+  <div class="lg:col-span-2 flex flex-col gap-6">
+    <div class="bg-slate-950 rounded-xl overflow-hidden shadow-md aspect-video w-full flex flex-col justify-center items-center relative border border-slate-800 group">
+        <% if @lesson.file %>
+        <video src="<%= url_for(@lesson.file) %>"
+               controls
+               class="w-full h-full object-contain"
+               controlsList="nodownload">
+          Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+        </video>
+      <% end %>
+    </div>
+
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded border border-blue-100">
+        </span>
+        <% if @lesson.respond_to?(:duration) && @lesson.duration.present? %>
+          <span class="text-xs font-mono text-slate-400">
+            Czas trwania: <%= @lesson.duration %>
+          </span>
+        <% end %>
+      </div>
+      <h1 class="text-xl font-bold text-slate-900 tracking-tight"><%= @lesson.title %></h1>
+      <% if @lesson.respond_to?(:description) && @lesson.description.present? %>
+        <p class="text-sm text-slate-600 mt-4 leading-relaxed"><%= @lesson.description %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="lg:col-span-1 lg:sticky lg:top-24 flex flex-col gap-4 max-h-[calc(100vh-12rem)]">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden max-h-full">
+
+      <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
+        <h2 class="text-sm font-bold text-slate-900 tracking-tight">Program kursu</h2>
+      </div>
+
+      <div class="overflow-y-auto p-4 flex flex-col gap-4 flex-1 [scrollbar-width:thin]">
+        <% if @course.chapters.empty? %>
+          <div class="text-center py-6 text-xs text-slate-400">Ten kurs nie ma jeszcze rozdziałów.</div>
+        <% else %>
+          <% @course.chapters.includes(:lessons).each_with_index do |chapter, c_index| %>
+            <div class="flex flex-col gap-2">
+
+              <h3 class="text-xs font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1.5 px-2">
+                <span>Rozdział <%= c_index + 1 %>:</span>
+                <span class="truncate text-slate-700 normal-case font-semibold"><%= chapter.title %></span>
+              </h3>
+
+              <div class="flex flex-col gap-1">
+                <% if chapter.lessons.empty? %>
+                  <div class="px-3 py-2 text-xs text-slate-400 italic">Brak lekcji w tym rozdziale</div>
+                <% else %>
+                  <% chapter.lessons.each do |lesson| %>
+                    <% is_active = lesson == @lesson %>
+
+                    <%= link_to course_chapter_lesson_path(@course, chapter, lesson),
+                                class: "flex items-center justify-between gap-4 px-3 py-2.5 rounded-lg border text-xs font-medium no-underline transition-all #{is_active ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm' : 'bg-white border-slate-100 hover:border-slate-200 text-slate-600 hover:text-slate-900'}" do %>
+
+                      <div class="flex items-center gap-2.5 min-w-0">
+                        <div class="shrink-0 <%= is_active ? 'text-blue-600' : 'text-slate-400' %>">
+                          <% if defined?(course_icon) %>
+                            <%= course_icon(is_active ? "play" : "video", size: 14) %>
+                          <% else %>
+                            •
+                          <% end %>
+                        </div>
+                        <span class="truncate"><%= lesson.title %></span>
+                      </div>
+
+                      <div class="flex items-center gap-2 shrink-0 font-mono text-[10px]">
+                        <% if lesson.respond_to?(:duration) && lesson.duration.present? %>
+                          <span class="text-slate-400"><%= lesson.duration %></span>
+                        <% end %>
+                      </div>
+
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+</div>

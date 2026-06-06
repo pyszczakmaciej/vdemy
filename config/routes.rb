@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resources :discover, only: [:index, :show]
   resources :enrollments, only: [:create]
-  resources :courses, only: [:index, :show]
+  resources :courses, only: [:index] do
+    resources :chapters, only: [] do
+      resources :lessons, only: [:show]
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
