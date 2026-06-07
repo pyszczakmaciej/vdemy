@@ -38,7 +38,7 @@
       <% [
            { label: "Home",   icon: "home",  path: root_path, active: controller_name == "home" },
            { label: "Discover",   icon: "compass",  path: discover_index_path, active: controller_name == "discover" },
-           { label: "My Courses", icon: "library",  path: courses_path, active: controller_name == "courses" || controller_name == "dashboards" },
+           { label: "My Courses", icon: "library",  path: courses_path, active: controller_name == "courses" || controller_name == "lessons" },
            { label: "Settings",   icon: "settings", path: "#", active: controller_name == "settings" },
          ].each do |item| %>
         <%= link_to item[:path],
