@@ -1,21 +1,43 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  subtitle: MyString
+  title: Ruby on Rails Course
+  subtitle: Learn Rails from scratch
   price: 9.99
   free: false
   published: false
-  category: 1
-  level: 1
+  category: 0
+  level: 0
   instructor: one
 
 two:
-  title: MyString
-  subtitle: MyString
-  price: 9.99
+  title: Design Course
+  subtitle: Learn design basics
+  price: 19.99
   free: false
   published: false
   category: 1
   level: 1
   instructor: two
+
+published_paid:
+  title: Advanced Python
+  subtitle: Python for pros
+  slug: advanced-python
+  price: 29.99
+  free: false
+  published: true
+  category: 0
+  level: 2
+  instructor: admin
+
+published_free:
+  title: Intro to HTML
+  subtitle: HTML for beginners
+  slug: intro-to-html
+  price: 0
+  free: true
+  published: true
+  category: 0
+  level: 0
+  instructor: admin
