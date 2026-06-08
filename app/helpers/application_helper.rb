@@ -1,10 +1,8 @@
 module ApplicationHelper
-
-
   def course_icon(name, size: 16)
     s = size
 
-    svg = ->(content){
+    svg = ->(content) {
       raw("<svg width='#{s}' height='#{s}' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'>#{content}</svg>")
     }
 
@@ -19,5 +17,4 @@ module ApplicationHelper
     when "plus"          then svg.("<path d='M12 5v14'/><path d='M5 12h14'/>")
     end
   end
-
 end

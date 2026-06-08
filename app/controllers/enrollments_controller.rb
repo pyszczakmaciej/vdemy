@@ -1,5 +1,4 @@
 class EnrollmentsController < ApplicationController
-
   def create
     @course = Course.friendly.includes(:chapters, :lessons).find(params[:course_id])
 
@@ -13,6 +12,5 @@ class EnrollmentsController < ApplicationController
     else
       redirect_to discover_path(@course), notice: "Enrollment, lessons not found.."
     end
-
   end
 end

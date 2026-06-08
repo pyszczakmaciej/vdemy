@@ -2,7 +2,7 @@ class Admin::LessonsController < ApplicationController
   layout "admin"
   before_action :set_course
   before_action :set_chapter
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_lesson, only: [ :show, :edit, :update, :destroy ]
   def edit
   end
 
@@ -25,7 +25,6 @@ class Admin::LessonsController < ApplicationController
   end
 
   def update
-
     if @lesson.update(lesson_params)
       redirect_to admin_course_chapter_path(@course, @chapter), notice: "Lesson was successfully updated."
     else
@@ -34,7 +33,6 @@ class Admin::LessonsController < ApplicationController
   end
 
   def destroy
-
   end
 
   private

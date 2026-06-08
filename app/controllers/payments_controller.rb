@@ -1,25 +1,24 @@
 class PaymentsController < ApplicationController
-
   def create
     @course = Course.friendly.find(params[:course_id])
 
     stripe_session = Stripe::Checkout::Session.create(
       mode: "payment",
-      payment_method_types: ["card"],
+      payment_method_types: [ "card" ],
       line_items: [
         {
           price_data: {
             currency: "usd",
             unit_amount: (@course.price * 100).to_i,
             product_data: {
-              name: @course.title,
+              name: @course.title
             }
           },
-          quantity: 1,
+          quantity: 1
         }
       ],
       customer_email: current_user.email_address,
-      metadata: {course_id: @course.id, user_id: current_user.id},
+      metadata: { course_id: @course.id, user_id: current_user.id },
       success_url: success_payments_url(course_id: @course.id) + "&session_id={CHECKOUT_SESSION_ID}",
     )
 

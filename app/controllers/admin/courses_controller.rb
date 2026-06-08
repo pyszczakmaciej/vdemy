@@ -1,6 +1,6 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [ :show, :edit, :update, :destroy ]
   def index
     @courses = Course.all
   end
@@ -28,7 +28,7 @@ class Admin::CoursesController < ApplicationController
 
   def update
     if @course.update(course_params)
-      redirect_to admin_courses_path, notice: 'Course was successfully updated.'
+      redirect_to admin_courses_path, notice: "Course was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end

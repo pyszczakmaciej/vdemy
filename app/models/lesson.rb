@@ -12,7 +12,7 @@ class Lesson < ApplicationRecord
   def acceptable_file
     return unless file.attached?
 
-    acceptable_types = ["video/mp4", "image/jpeg", "image/png", "image/jpg"]
+    acceptable_types = [ "video/mp4", "image/jpeg", "image/png", "image/jpg" ]
     unless acceptable_types.include?(file.content_type)
       errors.add(:file, "must be an image (jpg, jpeg, png) or mp4")
     end

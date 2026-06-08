@@ -7,9 +7,6 @@ class LessonsController < ApplicationController
     unless @enrolled || @course.free?
       redirect_to discover_path(@course), alert: "You don't have enrolled"
     end
-
-
-
   end
 
 

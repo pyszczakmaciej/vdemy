@@ -2,7 +2,6 @@ class Admin::ChaptersController < ApplicationController
   before_action :set_course
   before_action :set_chapter, only: [ :update, :destroy ]
   def new
-
   end
 
   def create
@@ -26,7 +25,6 @@ class Admin::ChaptersController < ApplicationController
   end
 
   def destroy
-
     if @chapter.destroy
       redirect_to edit_admin_course_path(@course), notice: "Chapter deleted"
     else
@@ -48,5 +46,4 @@ class Admin::ChaptersController < ApplicationController
   def chapter_params
     params.require(:chapter).permit(:title)
   end
-
 end
