@@ -9,3 +9,15 @@ two:
   title: MyString
   duration: MyString
   chapter: two
+
+paid_lesson:
+  title: Paid Lesson
+  slug: paid-lesson
+  duration: 10:00
+  chapter: paid_chapter
+
+free_lesson:
+  title: Free Lesson
+  slug: free-lesson
+  duration: 5:00
+  chapter: free_chapter

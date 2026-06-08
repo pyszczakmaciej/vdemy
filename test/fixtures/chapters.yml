@@ -9,3 +9,15 @@ two:
   title: MyString
   position: 1
   course: two
+
+paid_chapter:
+  title: First Chapter
+  slug: first-chapter
+  position: 1
+  course: published_paid
+
+free_chapter:
+  title: Free Chapter
+  slug: free-chapter
+  position: 1
+  course: published_free

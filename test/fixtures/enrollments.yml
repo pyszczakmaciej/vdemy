@@ -7,3 +7,7 @@ one:
 two:
   course: two
   user: two
+
+paid_enrollment:
+  course: published_paid
+  user: one
