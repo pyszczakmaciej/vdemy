@@ -10,10 +10,16 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :discover, only: [:index, :show]
-  resources :enrollments, only: [:create]
   resources :courses, only: [:index] do
+    resources :enrollments, only: [:create]
     resources :chapters, only: [] do
       resources :lessons, only: [:show]
+    end
+  end
+
+  resources :payments, only: [:create] do
+    collection do
+      get :success
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

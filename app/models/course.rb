@@ -5,6 +5,7 @@ class Course < ApplicationRecord
   has_many :chapters, -> {order(:position)}, dependent: :destroy
   has_many :lessons, through: :chapters
   has_many :enrollments, dependent: :destroy
+  has_many :payments
 
 
   enum :category, {

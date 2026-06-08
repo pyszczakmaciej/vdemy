@@ -69,3 +69,5 @@ end
 gem "tailwindcss-rails", "~> 4.4"
 
 gem 'friendly_id', '~> 5.5'
+
+gem 'stripe'
