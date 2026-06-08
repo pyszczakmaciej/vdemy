@@ -1,17 +1,6 @@
 require "test_helper"
 
 class LessonsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    # Attach a dummy file so the view doesn't crash on @lesson.file (uses if @lesson.file instead of file.attached?)
-    [ lessons(:paid_lesson), lessons(:free_lesson) ].each do |lesson|
-      tmp = Tempfile.new([ "test_video", ".mp4" ])
-      tmp.write("fake video content")
-      tmp.rewind
-      lesson.file.attach(io: tmp, filename: "video.mp4", content_type: "video/mp4")
-      tmp.close
-    end
-  end
-
   test "show redirects unauthenticated user" do
     get course_chapter_lesson_url(
       courses(:published_paid),

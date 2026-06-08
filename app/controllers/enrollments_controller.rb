@@ -1,7 +1,7 @@
 class EnrollmentsController < ApplicationController
 
   def create
-    @course = Course.includes(:chapters, :lessons).find(params[:course_id])
+    @course = Course.friendly.includes(:chapters, :lessons).find(params[:course_id])
 
     current_user.enrollments.find_or_create_by!(course: @course)
 
