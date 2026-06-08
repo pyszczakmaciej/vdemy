@@ -19,12 +19,17 @@
   </div>
 
   <% if @courses.empty? %>
-    <div class="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-xl mx-auto shadow-sm">
+    <div class="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-xl mx-auto shadow-sm flex flex-col gap-5">
       <div class="size-12 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center mx-auto mb-4 border border-slate-100">
         <%= course_icon("compass", size: 24) %>
       </div>
-      <h3 class="text-sm font-bold text-slate-900 tracking-tight">No courses available</h3>
-      <p class="text-xs text-slate-500 mt-1">Check back later for new content and exciting learning paths.</p>
+      <div>
+        <h3 class="text-sm font-bold text-slate-900 tracking-tight">No courses available</h3>
+        <p class="text-xs text-slate-500 mt-1">Check back later for new content and exciting learning paths.</p>
+      </div>
+
+      <%= link_to "Discover courses", discover_index_path(category: @category),
+                  class: "inline-flex items-center justify-center mt-5 px-4 h-9  text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg no-underline tracking-tight transition-colors shadow-sm cursor-pointer" %>
     </div>
   <% else %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
