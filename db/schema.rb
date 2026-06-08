@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_06_213416) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_093410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -116,6 +116,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_213416) do
     t.index ["slug"], name: "index_lessons_on_slug", unique: true
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "price_cents"
+    t.string "status"
+    t.string "stripe_session_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["course_id"], name: "index_payments_on_course_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -141,5 +153,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_213416) do
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
   add_foreign_key "lessons", "chapters"
+  add_foreign_key "payments", "courses"
+  add_foreign_key "payments", "users"
   add_foreign_key "sessions", "users"
 end

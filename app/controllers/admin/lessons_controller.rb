@@ -7,8 +7,6 @@ class Admin::LessonsController < ApplicationController
   end
 
   def new
-    @course = Course.find(params[:course_id])
-    @chapter = @course.chapters.find(params[:chapter_id])
     @lesson = Lesson.new
   end
 
