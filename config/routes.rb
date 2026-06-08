@@ -35,5 +35,5 @@ Rails.application.routes.draw do
   post "sign_up" => "registrations#create", as: :sign_up_create
 
   # Defines the root path route ("/")
-  root "home#index"
+  root "courses#index"
 end

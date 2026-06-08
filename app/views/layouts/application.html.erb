@@ -29,16 +29,12 @@
         <span class="size-6 rounded-md bg-blue-600 text-white inline-flex items-center justify-center text-xs font-black tracking-tighter shrink-0">V</span>
         <span class="text-slate-900">V<span class="text-slate-400 font-medium">demy</span></span>
       </div>
-      <div class="pl-8">
-        <span class="font-mono text-[10px] tracking-widest text-slate-600 bg-slate-100 py-0.5 px-2 rounded font-bold uppercase">Student</span>
-      </div>
     </div>
 
     <nav class="flex flex-col gap-1">
       <% [
-           { label: "Home",   icon: "home",  path: root_path, active: controller_name == "home" },
-           { label: "Discover",   icon: "compass",  path: discover_index_path, active: controller_name == "discover" },
            { label: "My Courses", icon: "library",  path: courses_path, active: controller_name == "courses" || controller_name == "lessons" },
+           { label: "Discover",   icon: "compass",  path: discover_index_path, active: controller_name == "discover" },
            { label: "Settings",   icon: "settings", path: "#", active: controller_name == "settings" },
          ].each do |item| %>
         <%= link_to item[:path],
