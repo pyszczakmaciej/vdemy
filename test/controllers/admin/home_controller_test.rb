@@ -1,8 +1,5 @@
 require "test_helper"
 
+# Admin::HomeController does not exist — this file is a leftover stub.
 class Admin::HomeControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get admin_home_index_url
-    assert_response :success
-  end
 end
