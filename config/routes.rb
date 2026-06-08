@@ -1,23 +1,23 @@
 Rails.application.routes.draw do
   namespace :admin do
     resources :courses do
-      resources :chapters, only: [:create, :update, :destroy ] do
-        resources :lessons, except: [:index]
+      resources :chapters, only: [ :create, :update, :destroy ] do
+        resources :lessons, except: [ :index ]
       end
     end
     root "dashboard#index"
   end
   resource :session
   resources :passwords, param: :token
-  resources :discover, only: [:index, :show]
-  resources :courses, only: [:index] do
-    resources :enrollments, only: [:create]
+  resources :discover, only: [ :index, :show ]
+  resources :courses, only: [ :index ] do
+    resources :enrollments, only: [ :create ]
     resources :chapters, only: [] do
-      resources :lessons, only: [:show]
+      resources :lessons, only: [ :show ]
     end
   end
 
-  resources :payments, only: [:create] do
+  resources :payments, only: [ :create ] do
     collection do
       get :success
     end
